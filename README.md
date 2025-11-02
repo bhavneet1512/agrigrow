@@ -1,427 +1,208 @@
-# SoilSathi 🌱
+﻿# AgriGrow 🌾
 
-**A comprehensive soil health monitoring and agricultural management platform built with React Native and Expo**
+**A smart soil analysis & crop recommendation platform — IoT + Cloud + AI for sustainable farming**
 
-[![React Native](https://img.shields.io/badge/React%20Native-0.79.6-blue.svg)](https://reactnative.dev/)
-[![Expo](https://img.shields.io/badge/Expo-SDK%2052-black.svg)](https://expo.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.3.0-blue.svg)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ## 📖 Table of Contents
 
 - [Overview](#overview)
-- [Features](#features)
+- [Key Features](#key-features)
 - [Architecture](#architecture)
+- [Hardware Components](#hardware-components)
+- [Software Stack](#software-stack)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Screens & Components](#screens--components)
-- [Technologies Used](#technologies-used)
-- [Educational Features](#educational-features)
-- [API Integration](#api-integration)
-- [Development Workflow](#development-workflow)
+- [Mobile Application](#mobile-application)
+- [Machine Learning Integration](#machine-learning-integration)
+- [Future Enhancements](#future-enhancements)
 - [Contributing](#contributing)
 - [License](#license)
+- [Acknowledgments](#acknowledgments)
 
 ## 🌟 Overview
 
-SoilSathi is an innovative mobile application designed to revolutionize agricultural practices through advanced soil health monitoring, AI-powered plant disease detection, and comprehensive farm management tools. The application serves both farmers and gardeners with specialized dashboards, educational content, and community features.
+AgriGrow bridges soil science and digital agriculture by providing real-time soil monitoring and intelligent fertilizer recommendations. It combines low-cost IoT sensors with cloud connectivity and machine learning to deliver crop-specific nutrient dosing, irrigation alerts, and long-term soil health insights.
 
-### Key Objectives
+Key benefits:
+- Real-time multi-depth soil monitoring
+- AI-driven fertilizer & pesticide recommendations
+- Mobile access and remote monitoring
+- Reduced fertilizer wastage and improved sustainability
 
-- **Soil Health Monitoring**: Real-time soil analysis and health tracking
-- **Disease Detection**: AI-powered plant disease identification and treatment recommendations
-- **Educational Platform**: Interactive learning tools for all age groups
-- **Community Building**: Social platform for agricultural knowledge sharing
-- **Drone Integration**: Advanced aerial monitoring and services
-- **E-commerce**: Integrated marketplace for agricultural products
+## 🎯 Objectives
 
-## ✨ Features
+- Enable continuous soil data acquisition with low-cost sensors
+- Provide AI-based nutrient and fertilizer recommendations
+- Integrate with mobile apps for instant access to soil metrics
+- Support cloud storage and remote monitoring for scalable deployments
+- Reduce fertilizer overuse and protect groundwater
 
-### 🚜 For Farmers
-- **Comprehensive Dashboard**: Overview of farm operations and analytics
-- **Drone Services**: Aerial monitoring, spraying, and surveillance
-- **Field Management**: Multi-field tracking and management
-- **Weather Integration**: Real-time weather data and forecasts
-- **Reports & Analytics**: Detailed insights and performance metrics
-- **Soil Analysis**: Advanced soil testing and recommendations
+## ✨ Key Features
 
-### 🌿 For Gardeners
-- **Personalized Dashboard**: Tailored gardening insights and tools
-- **Plant Disease Detection**: Camera-based AI disease identification
-- **Garden Planning**: Virtual garden layout and management
-- **Plant Care Reminders**: Automated watering and care schedules
-- **Community Features**: Social networking with local gardeners
-- **Product Store**: Curated gardening supplies marketplace
+### 🔬 Smart Soil Analysis
+- Monitor N, P, K levels, pH, and moisture at multiple depths
+- Optional pesticide/chemical residue detection for toxicity checks
+- Local data preprocessing on ESP32 for efficient telemetry
 
-### 👶 Educational Features
-- **Interactive Learning Games**: Gamified soil and plant education
-- **AR Soil Explorer**: Augmented reality soil organism discovery
-- **Soil Health Tips Library**: Age-appropriate educational content
-- **Superhero Story Mode**: Interactive storytelling with soil heroes
+### ☁️ Cloud Connectivity
+- Transmit data using ESP32 (Wi‑Fi) via MQTT or HTTPS
+- Store time-series data in Firebase / ThingsBoard / AWS IoT
+- Multi-location sync and historical trends
 
-### 🛒 E-commerce Integration
-- **Product Marketplace**: Seeds, tools, fertilizers, and equipment
-- **Secure Payments**: Multiple payment method support
-- **Order Tracking**: Real-time delivery updates
-- **Product Recommendations**: AI-powered suggestions
+### 🤖 AI-Powered Recommendations
+- Regression and lightweight RBFN models for nutrient prediction
+- Crop-aware fertilizer dosing (growth-stage aware)
+- Trend detection and nutrient-deficiency forecasting
+
+### 📱 Mobile App Integration
+- Live dashboards for NPK, pH, moisture and trends
+- Crop advisory with recommended dosages and alerts
+- Device management and notifications for irrigation/nutrients
+
+### 🔋 Hardware Efficiency & Sustainability
+- Low power consumption; battery/solar-compatible
+- Weatherproof enclosures for field deployment
+- Promotes eco-friendly fertilization practices
 
 ## 🏗️ Architecture
 
-### Frontend Architecture
+System overview:
+
 ```
-SoilSathi/
-├── App.tsx                 # Main application entry point
-├── src/
-│   ├── components/         # Reusable UI components
-│   ├── screens/           # Application screens
-│   ├── navigation/        # Navigation configuration
-│   ├── contexts/          # React Context providers
-│   ├── constants/         # App constants and themes
-│   └── utils/             # Utility functions
+     +---------------------------+
+     |       Sensor Layer        |
+     |---------------------------|
+     | NPK | pH | Moisture | Pesticide |
+     +---------------+---------------+
+                     |
+                     v
+             +---------------+
+             |   ESP32 MCU    |
+             | (Data Fusion)  |
+             +---------------+
+                     |
+               Wi-Fi / MQTT
+                     |
+                     v
+           +--------------------+
+           |  Cloud Database    |
+           +--------------------+
+                     |
+                     v
+          +----------------------+ 
+          |  Mobile Application  |
+          |  (Visualization &    |
+          |   Recommendations)   |
+          +----------------------+ 
 ```
 
-### Technology Stack
-- **Framework**: React Native with Expo
-- **Language**: TypeScript
-- **Navigation**: React Navigation 6
-- **State Management**: React Context API
-- **UI Components**: Custom components with Ionicons
-- **Camera Integration**: Expo Camera for AR and disease detection
-- **Location Services**: Expo Location for mapping features
+## ⚙️ Hardware Components
+
+| Component | Description |
+|---|---|
+| ESP32 | Wi‑Fi microcontroller for data fusion & transmission |
+| NPK sensor | Measures Nitrogen, Phosphorus, Potassium levels |
+| pH sensor | Measures soil acidity/alkalinity |
+| Soil moisture sensor | Monitors water content at different depths |
+| Pesticide detection module | Optional chemical residue evaluation |
+| Power | Rechargeable battery or solar charge system |
+| Enclosure | Weatherproof casing for field deployment |
+
+## 💻 Software Stack
+
+| Layer | Technology |
+|---|---|
+| Microcontroller | C/C++ (Arduino IDE or PlatformIO) |
+| Communication | MQTT / HTTP over Wi‑Fi |
+| Cloud | Firebase / AWS IoT / ThingsBoard |
+| Mobile | React Native + TypeScript (Expo) |
+| ML | Python — scikit-learn / TensorFlow Lite for mobile |
+| Visualization | Charts & dashboards (mobile + web) |
 
 ## 🚀 Installation
 
-### Prerequisites
-- Node.js (>= 16.0.0)
-- npm or yarn
-- Expo CLI
-- Android Studio (for Android development)
-- Xcode (for iOS development, macOS only)
+### Hardware
+1. Connect sensors to the ESP32 following the circuit schematic in docs (NPK analog lines, pH analog, moisture ADC, optional pesticide module).
+2. Upload firmware using Arduino IDE or PlatformIO.
+3. Configure Wi‑Fi SSID/password and cloud endpoint (MQTT broker or HTTP URL) in the firmware.
 
-### Setup Instructions
+### Mobile App (development)
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/shirshak001/SoilSathi.git
-   cd SoilSathi
-   ```
+Clone the repository and install dependencies:
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
-
-3. **Install Expo CLI globally**
-   ```bash
-   npm install -g @expo/cli
-   ```
-
-4. **Start the development server**
-   ```bash
-   npx expo start
-   ```
-
-5. **Run on device/simulator**
-   - **Android**: Press `a` or scan QR code with Expo Go app
-   - **iOS**: Press `i` or scan QR code with Camera app
-   - **Web**: Press `w` to open in browser
-
-### Dependencies
-
-#### Core Dependencies
-```json
-{
-  "@expo/vector-icons": "^15.0.0",
-  "@react-native-async-storage/async-storage": "^2.2.0",
-  "@react-navigation/native": "^6.1.0",
-  "@react-navigation/stack": "^6.4.0",
-  "expo": "~52.0.0",
-  "expo-camera": "^16.1.11",
-  "expo-location": "^18.1.6",
-  "react": "18.3.1",
-  "react-native": "0.79.6",
-  "react-native-svg": "^15.12.1"
-}
+```powershell
+git clone https://github.com/yourusername/AgriGrow.git
+cd AgriGrow
+npm install
 ```
+
+Start the Expo development server:
+
+```powershell
+npx expo start
+```
+
+Run on device/simulator:
+- Android: Press `a` or scan the QR code with Expo Go
+- iOS: Press `i` (macOS) or scan QR with Camera app
+- Web: Press `w`
 
 ## 📱 Usage
 
-### Getting Started
+### Core Workflows
 
-1. **User Registration**: Choose between Farmer or Gardener user type
-2. **Dashboard Navigation**: Access role-specific features and tools
-3. **Profile Setup**: Configure personal preferences and settings
-4. **Feature Exploration**: Discover available tools and educational content
+- Real-time soil monitoring: view live NPK, pH, and moisture readings
+- Crop Advisory: get crop-specific fertilizer/pesticide recommendations
+- Reports: view historical trends and export CSVs
+- Alerts: receive notifications for irrigation and nutrient events
 
-### Key Workflows
+### Interface Overview
+- Home: live metrics and device/cloud sync status
+- Crop Advisory: recommendations and dosing instructions
+- Reports: time-series charts and summaries
+- Settings: device setup, cloud credentials, notifications
 
-#### Soil Analysis
-1. Navigate to Soil Analysis screen
-2. Capture soil sample image
-3. Receive AI-powered analysis results
-4. View recommendations and treatment options
+## 🧠 Machine Learning Integration
 
-#### Plant Disease Detection
-1. Open Plant Disease Detection feature
-2. Take photo of affected plant
-3. Get instant disease identification
-4. Access treatment recommendations and products
+- Models: Regression and Radial Basis Function Networks (RBFN) for nutrient prediction and dosing.
+- Training: use curated crop datasets and field samples to calibrate models.
+- Deployment: convert models to TensorFlow Lite for on-device inference where applicable, or run predictions on the cloud for heavier models.
+- Inputs: recent NPK, pH, moisture, crop type, growth stage, weather features.
 
-#### Educational Content Access
-1. Visit Kids Education Hub
-2. Choose from available learning modules
-3. Engage with interactive content
-4. Track progress and achievements
+## 🔮 Future Enhancements
 
-## 📁 Project Structure
-
-```
-SoilSathi/
-├── App.tsx                           # Application root component
-├── app.json                          # Expo configuration
-├── package.json                      # Dependencies and scripts
-├── tsconfig.json                     # TypeScript configuration
-├── metro.config.js                   # Metro bundler configuration
-├── assets/                           # Static assets
-│   ├── icon.png
-│   ├── splash-icon.png
-│   └── favicon.png
-└── src/
-    ├── components/                   # Reusable components
-    │   ├── ChatBot.tsx
-    │   ├── CustomButton.tsx
-    │   ├── CustomInput.tsx
-    │   ├── FloatingPlantScanner.tsx
-    │   ├── LanguageSelector.tsx
-    │   └── ThemeToggle.tsx
-    ├── constants/                    # App constants
-    │   └── theme.ts
-    ├── contexts/                     # React contexts
-    │   ├── LanguageContext.tsx
-    │   └── ThemeContext.tsx
-    ├── navigation/                   # Navigation setup
-    │   └── AppNavigation.tsx
-    └── screens/                      # Application screens
-        ├── auth/                     # Authentication screens
-        │   ├── LoginScreen.tsx
-        │   ├── SignupScreen.tsx
-        │   └── ForgotPasswordScreen.tsx
-        ├── dashboards/               # User dashboards
-        │   ├── FarmerDashboard.tsx
-        │   └── GardenerDashboard.tsx
-        ├── education/                # Educational features
-        │   ├── InteractiveLearningGamesScreen.tsx
-        │   ├── ARSoilExplorerScreen.tsx
-        │   ├── SoilHealthTipsScreen.tsx
-        │   └── SoilSuperheroStoryScreen.tsx
-        ├── features/                 # Core features
-        │   ├── PlantDiseaseDetection.tsx
-        │   ├── SoilAnalysisScreen.tsx
-        │   ├── DroneServiceScreen.tsx
-        │   └── WeatherTipsScreen.tsx
-        ├── profile/                  # User profile
-        │   ├── ProfileScreen.tsx
-        │   ├── SettingsScreen.tsx
-        │   └── PrivacySecurityScreen.tsx
-        └── commerce/                 # E-commerce
-            ├── ProductStore.tsx
-            ├── Checkout.tsx
-            └── PaymentMethodsScreen.tsx
-```
-
-## 🖥️ Screens & Components
-
-### Authentication Flow
-- **LoginScreen**: User authentication with email/password
-- **SignupScreen**: New user registration with role selection
-- **ForgotPasswordScreen**: Password recovery functionality
-- **UserTypeSelectionScreen**: Choose between Farmer/Gardener roles
-
-### Dashboard Screens
-- **FarmerDashboard**: Comprehensive farm management interface
-- **GardenerDashboard**: Gardening tools and community features
-
-### Core Feature Screens
-- **SoilAnalysisScreen**: AI-powered soil health analysis
-- **PlantDiseaseDetection**: Camera-based disease identification
-- **DroneServiceScreen**: Drone service booking and management
-- **WeatherTipsScreen**: Weather-based agricultural advice
-
-### Educational Screens
-- **InteractiveLearningGamesScreen**: Gamified learning platform
-- **ARSoilExplorerScreen**: Augmented reality soil exploration
-- **SoilHealthTipsScreen**: Comprehensive soil health education
-- **SoilSuperheroStoryScreen**: Interactive storytelling for kids
-
-### Community & Commerce
-- **CommunityScreen**: Social networking for gardeners
-- **ProductStore**: Agricultural products marketplace
-- **Checkout**: Secure payment processing
-
-## 🛠️ Technologies Used
-
-### Frontend Framework
-- **React Native**: Cross-platform mobile development
-- **Expo**: Development platform and deployment
-- **TypeScript**: Type-safe JavaScript development
-
-### UI/UX Libraries
-- **@expo/vector-icons**: Icon library (Ionicons)
-- **react-native-svg**: SVG rendering support
-- **expo-linear-gradient**: Gradient backgrounds
-
-### Navigation & State Management
-- **React Navigation**: App navigation and routing
-- **React Context API**: Global state management
-
-### Device Integration
-- **expo-camera**: Camera access for AR and disease detection
-- **expo-location**: GPS and location services
-- **@react-native-async-storage/async-storage**: Local data persistence
-
-### Development Tools
-- **Metro**: JavaScript bundler
-- **ESLint**: Code linting and formatting
-- **TypeScript Compiler**: Type checking
-
-## 🎓 Educational Features
-
-### Interactive Learning Games
-- **Soil Matching Game**: Match soil types with characteristics
-- **Plant Care Challenge**: Virtual plant care simulation
-- **Weather Prediction**: Educational weather pattern games
-- **Composting Adventure**: Learn composting through gameplay
-
-### AR Soil Explorer
-- **Camera Integration**: Real-time AR overlay
-- **Organism Discovery**: Find and learn about soil creatures
-- **Educational Content**: Detailed information about soil biology
-- **Progress Tracking**: Achievement system for discoveries
-
-### Soil Health Tips Library
-- **Dual Mode Interface**: Kids and elderly-friendly versions
-- **Comprehensive Content**: Composting, watering, recycling guides
-- **Interactive Elements**: Step-by-step tutorials
-- **Accessibility Features**: Voice narration and large text options
-
-### Superhero Story Mode ⭐ **NEW**
-- **Character-Based Learning**: Captain Compost, Mitti Mitra, Green Guardian
-- **Progressive Chapters**: Unlockable story content
-- **Interactive Choices**: Decision-based learning scenarios
-- **Badge System**: Achievement tracking and rewards
-
-## 🔌 API Integration
-
-### Planned Integrations
-- **Weather APIs**: Real-time weather data
-- **Soil Analysis APIs**: Laboratory result processing
-- **Plant Disease APIs**: AI-powered disease identification
-- **E-commerce APIs**: Payment processing and order management
-- **Mapping APIs**: Location-based services
-
-### Data Management
-- **Local Storage**: AsyncStorage for offline functionality
-- **Cache Management**: Efficient data caching strategies
-- **Sync Mechanisms**: Online/offline data synchronization
-
-## 🔄 Development Workflow
-
-### Code Organization
-- **Component-Based Architecture**: Modular, reusable components
-- **TypeScript Integration**: Full type safety throughout the app
-- **Consistent Styling**: Centralized theme management
-- **Icon Standardization**: Professional Ionicons implementation
-
-### Quality Assurance
-- **Type Safety**: TypeScript for compile-time error detection
-- **Code Consistency**: ESLint configuration for code standards
-- **Performance Optimization**: Efficient rendering and memory management
-
-### Build Process
-```bash
-# Development build
-npx expo start
-
-# Production build
-npx expo build:android
-npx expo build:ios
-
-# Web deployment
-npx expo build:web
-```
+- Drone-based soil imaging and automated sampling
+- Blockchain traceability for fertilizer usage and provenance
+- Multi-language mobile app and localized advisories
+- Integration with government soil data portals and precision agriculture services
+- Predictive irrigation scheduling using weather + soil models
 
 ## 🤝 Contributing
 
-We welcome contributions to SoilSathi! Please follow these guidelines:
+Contributions are welcome!
 
-### Development Setup
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Make your changes with proper TypeScript typing
-4. Ensure all components use Ionicons (no emojis)
-5. Test thoroughly on both platforms
-6. Commit your changes (`git commit -m 'Add amazing feature'`)
-7. Push to the branch (`git push origin feature/amazing-feature`)
-8. Open a Pull Request
+1. Fork the repo
+2. Create a branch: `git checkout -b feature/your-feature`
+3. Implement your changes with TypeScript/C++ style and tests where appropriate
+4. Commit and push: `git commit -m "Add feature"` / `git push origin feature/your-feature`
+5. Open a Pull Request
 
-### Code Standards
-- **TypeScript**: All code must be properly typed
-- **Icons**: Use Ionicons exclusively, no emoji characters
-- **Components**: Follow React Native best practices
-- **Naming**: Use descriptive, consistent naming conventions
-- **Documentation**: Document complex functions and components
-
-### Testing Guidelines
-- Test on both Android and iOS
-- Verify accessibility features
-- Ensure offline functionality where applicable
-- Test with different screen sizes and orientations
-
-## 📋 Roadmap
-
-### Phase 1 (Current)
-- ✅ Core dashboard functionality
-- ✅ Authentication system
-- ✅ Educational features implementation
-- ✅ UI/UX standardization with Ionicons
-
-### Phase 2 (Upcoming)
-- 🔄 API integration for real-time data
-- 🔄 Advanced AI disease detection
-- 🔄 Payment gateway integration
-- 🔄 Push notification system
-
-### Phase 3 (Future)
-- 📋 Drone integration and control
-- 📋 IoT sensor integration
-- 📋 Advanced analytics dashboard
-- 📋 Multi-language support expansion
-
-## 📞 Support
-
-For support, feature requests, or bug reports:
-
-- **GitHub Issues**: [Open an issue](https://github.com/shirshak001/SoilSathi/issues)
-- **Documentation**: Check this README and inline code documentation
-- **Community**: Join our discussions in the GitHub repository
+Guidelines:
+- Follow TypeScript for mobile code; comment microcontroller firmware clearly
+- Use clear function names and document hardware pin mappings
+- Add unit tests for ML data processing pipelines when possible
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License — see the `LICENSE` file for details.
 
 ## 🙏 Acknowledgments
 
-- **Expo Team**: For providing an excellent development platform
-- **React Native Community**: For continuous innovation and support
-- **Ionicons**: For comprehensive icon library
-- **Agricultural Experts**: For domain knowledge and guidance
-- **Open Source Contributors**: For making this project possible
+- NIT Hamirpur for research collaboration
+- Open Source Hardware community for sensor libraries and documentation
+- Farmers and agronomists for field data and feedback
 
 ---
 
-**Built with ❤️ by the SoilSathi Team**
-
-*Empowering agriculture through technology and education*
+Built with 💚 by the AgriGrow Team — empowering farmers through data-driven agriculture.
